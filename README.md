@@ -1,2 +1,2 @@
 # HexAI
-HexAI is an autonomous player for the strategic board game HEX, developed in Python as part of an Artificial Intelligence project.
+HexAI is an autonomous player for the strategic board game HEX, developed in Python as part of an Artificial Intelligence project. It leverages Monte Carlo Tree Search (MCTS) with the UCT policy to explore the game tree and make decisions within a strict time limit. A key optimization includes immediate winning‑move detection to ensure victory opportunities are never missed. Designed for automated tournaments, HexAI is fast, efficient, and seamlessly integrates with the provided base class structure.
