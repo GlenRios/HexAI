@@ -17,11 +17,7 @@ class MixedPlayer(Player):
         super().__init__(player_id)
         self.opponent_id = 3 - player_id
 
-    # ------------------------------------------------------------
-    # Método principal
-    # ------------------------------------------------------------
     def play(self, board: HexBoard) -> tuple:
-        # Comprobaciones rápidas comunes
         win_move = self._find_winning_move(board, self.player_id)
         if win_move:
             return win_move
@@ -30,7 +26,6 @@ class MixedPlayer(Player):
         if threat_move:
             return threat_move
 
-        # Decidir estrategia según el tamaño
         if board.size < 10:
             return self._mcts_play(board)
         else:
@@ -83,11 +78,9 @@ class MixedPlayer(Player):
         while time.time() - start < time_limit:
             node = root
 
-            # Selección
             while node.untried_moves == [] and node.children != []:
                 node = node.select_child()
 
-            # Expansión
             if node.untried_moves:
                 move = random.choice(node.untried_moves)
                 node.untried_moves.remove(move)
@@ -100,13 +93,10 @@ class MixedPlayer(Player):
                 node.children.append(child)
                 node = child
 
-            # Simulación aleatoria
             winner = self._random_simulation(node.board, node.player_to_move)
 
-            # Retropropagación
             node.backpropagate(winner)
 
-        # Elegir el hijo con más visitas
         if not root.children:
             return moves[0]
         best = max(root.children, key=lambda c: c.visits)
@@ -139,14 +129,12 @@ class MixedPlayer(Player):
         if not moves:
             return None
 
-        # Profundidad dinámica: más profunda cuando quedan pocas celdas
         remaining = len(moves)
         max_depth = 5 if remaining < 10 else 3
 
         best_move = None
         depth = 1
         while time.time() - start_time < time_limit and depth <= max_depth:
-            # Ordenar movimientos por heurística para mejor poda
             moves_sorted = sorted(moves, key=lambda m: self._heuristic_move_score(board, m, self.player_id), reverse=True)
             best_val = -math.inf
             alpha = -math.inf
