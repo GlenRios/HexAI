@@ -291,11 +291,11 @@ def print_tournament_results(results, player1_name, player2_name):
 # Ejemplo de uso
 if __name__ == "__main__":
     # Importar tus jugadores
-    from fabio_player import SmartPlayer
+    from AlphaBeta_player import HeuristicPlayer
     from Mixed_player import MixedPlayer
     
     # Crear jugadores
-    jugador2 = SmartPlayer(2)
+    jugador2 = HeuristicPlayer(2)
     jugador1 = MixedPlayer(1)
     
     # Configuración del torneo
